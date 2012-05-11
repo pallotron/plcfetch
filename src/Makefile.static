@@ -1,0 +1,34 @@
+# Makefile for plcfetch
+
+CC = gcc
+CFLAGS += -g -Wall 
+LINK = gcc
+LINKFLAGS = -g -Wall -static -lodbc -lpthread -lltdl -ldl
+NAME = plcfetch
+STATICLIB=libodbc.a libodbccr.a libodbcinst.a libodbcinstQ.a libtdsodbc.a libtds.a libtdsodbc.a libtdssrv.a libpthread.a libltdl.a libc.a 
+
+
+OPTIMIZE= -O3 -g -Wall -D_POSIX -D_SYSV -D_SELECT -D_HAVE_MACROS -D__USE_GNU
+
+CFLAGS= $(OPTIMIZE)
+
+OBJS= conf.o sysdep1.o plcfetch.o utils.o serial.o odbc.o
+
+all: $(NAME) strip
+
+$(NAME): $(OBJS)
+	        $(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LINKFLAGS)
+
+$(NAME).o: $(NAME).c
+
+clean :
+	rm -f *~ core *.o a.out plcfetch
+
+cscope:
+	cscope -bR
+
+ctags:
+	ctags -R
+
+strip:
+	strip plcfetch

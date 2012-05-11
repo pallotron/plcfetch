@@ -1,0 +1,3 @@
+vi /etc/crontabs/root
+
+0 1 * * * /rw/root/starstopplcfetch.sh 
